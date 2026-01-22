@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">My Orders</h2>
+
+    {% if orders %}
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Products</th>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Quantities</th>
+                <th>Prices</th>
+                <th>Totals</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <!-- جميع أسماء المنتجات في قائمة -->
+                <td>
+                    <ul class="list-unstyled mb-0">
+                        {% for item in order.items.all %}
+                            <li>{{ item.product.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ order.id }}</td>
+                <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+
+                <!-- جميع الكميات -->
+                <td>
+                    <ul class="list-unstyled mb-0">
+                        {% for item in order.items.all %}
+                            <li>{{ item.quantity }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+
+                <!-- جميع الأسعار -->
+                <td>
+                    <ul class="list-unstyled mb-0">
+                        {% for item in order.items.all %}
+                            <li>${{ item.product.price }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+
+                <!-- جميع المجموعات لكل منتج -->
+                <td>
+                    <ul class="list-unstyled mb-0">
+                        {% for item in order.items.all %}
+                            <li>${{ item.total_price }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+
+                <!-- أزرار التحكم -->
+                <td>
+                    <a href="{% url 'cancel_order' order.id %}" class="btn btn-sm btn-danger mb-1">Cancel</a>
+                    <a href="{% url 'payment' order.id %}" class="btn btn-sm btn-success">Buy</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>You have no orders yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

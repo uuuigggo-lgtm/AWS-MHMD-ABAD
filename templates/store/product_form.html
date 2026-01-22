@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Add Product</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {{ form.category.label_tag }}
+                        {{ form.category|add_class:"form-select" }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.brand.label_tag }}
+                        {{ form.brand|add_class:"form-control" }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    {{ form.name.label_tag }}
+                    {{ form.name|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    {{ form.description.label_tag }}
+                    {{ form.description|add_class:"form-control" }}
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        {{ form.storage.label_tag }}
+                        {{ form.storage|add_class:"form-control" }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        {{ form.ram.label_tag }}
+                        {{ form.ram|add_class:"form-control" }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        {{ form.price.label_tag }}
+                        {{ form.price|add_class:"form-control" }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    {{ form.image.label_tag }}
+                    {{ form.image|add_class:"form-control" }}
+                </div>
+                <button type="submit" class="btn btn-success btn-lg w-100">Add Product</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
